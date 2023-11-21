@@ -88,4 +88,27 @@ class Autentikasi extends CI_Controller
             redirect(base_url('autentikasi'));
         }
     }
+
+    public function blok()
+    {
+        $this->load->view('autentikasi/blok');
+    }
+
+    public function gagal()
+    {
+        $this->load->view('autentikasi/gagal');
+    }
+
+    public function logout()
+    {
+        $data = array(
+            'email' => '',
+            'role_id' => '',
+        );
+
+        $this->session->unset_userdata($data);
+        $this->session->sess_destroy();
+
+        redirect('autentikasi');
+    }
 }

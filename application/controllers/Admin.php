@@ -13,7 +13,7 @@ class Admin extends CI_Controller
         $data['judul'] = 'Dashboard';
         $data['user'] = $this->ModelUser->cekData(['email' => $this->session->userdata('email')])->row_array();
         $data['members'] = $this->ModelUser->getUserLimit()->result_array();
-        $data['books'] = $this->ModelBuku->getBuku->result_array();
+        $data['books'] = $this->ModelBuku->getBuku()->result_array();
 
         $this->load->view('admin/templates/header', $data);
         $this->load->view('admin/templates/sidebar', $data);

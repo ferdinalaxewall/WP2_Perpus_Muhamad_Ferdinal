@@ -106,83 +106,87 @@
 
         <!-- Content Row -->
 
-        <div class="row">
+        <div class="row px-2" style="row-gap: 15px;">
             <!-- Data User -->
-            <div class="table-responsive table-bordered col-sm-5 ml-auto mr-auto mt-2">
-                <div class="page-header">
-                    <span class="fas fa-user text-primary mt-2">Data User</span>
-                    <a href="<?= base_url('user/data_user') ?>" class="text-danger">
-                        <i class="fas fa-search mt-2 float-right"></i> Tampilkan
-                    </a>
+            <div class="card col-12 px-3 py-2 shadow">
+                <div class="table-responsive mt-2">
+                    <div class="page-header mb-3">
+                        <span class="text-primary mt-2"><i class="fas fa-user"></i> Data User</span>
+                        <a href="<?= base_url('user/data_user') ?>" class="text-danger ml-3">
+                            <i class="fas fa-search mt-2 float-right"></i> Tampilkan
+                        </a>
+                    </div>
+    
+                    <table class="table mt-3 default-dataTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama Anggota</th>
+                                <th>Email</th>
+                                <th>Role ID</th>
+                                <th>Aktif</th>
+                                <th>Member Sejak</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($members as $index => $member) { ?>
+    
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= $member['nama'] ?></td>
+                                <td><?= $member['email'] ?></td>
+                                <td><?= $member['role_id'] ?></td>
+                                <td><?= $member['is_active'] ? 'Aktif' : 'Non-Aktif' ?></td>
+                                <td>hehe</td>
+                            </tr>
+                                    
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
-
-                <table class="table mt-3" id="table-datatable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nama Anggota</th>
-                            <th>Email</th>
-                            <th>Role ID</th>
-                            <th>Aktif</th>
-                            <th>Member Sejak</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($members as $index => $member) { ?>
-
-                        <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><?= $member['nama'] ?></td>
-                            <td><?= $member['email'] ?></td>
-                            <td><?= $member['role_id'] ?></td>
-                            <td><?= $member['is_active'] ? 'Aktif' : 'Non-Aktif' ?></td>
-                            <td><?= date('Y', $member['tanggal_input']) ?></td>
-                        </tr>
-                                
-                        <?php } ?>
-                    </tbody>
-                </table>
             </div>
 
             <!-- Data Buku -->
-            <div class="table-responsive table-bordered col-sm-5 ml-auto mr-auto mt-2">
-                <div class="page-header">
-                    <span class="fas fa-book text-primary mt-2">Data Buku</span>
-                    <a href="<?= base_url('buku') ?>" class="text-danger">
-                        <i class="fas fa-search mt-2 float-right"></i> Tampilkan
-                    </a>
+            <div class="card col-12 px-3 py-2 shadow">
+                <div class="table-responsive mt-2">
+                    <div class="page-header mb-3">
+                        <span class="text-primary mt-2"><i class="fas fa-book"></i> Data Buku</span>
+                        <a href="<?= base_url('buku') ?>" class="text-danger ml-3">
+                            <i class="fas fa-search mt-2 float-right"></i> Tampilkan
+                        </a>
+                    </div>
+    
+                    <table class="table mt-3 default-dataTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Judul Buku</th>
+                                <th>Pengarang</th>
+                                <th>Penerbit</th>
+                                <th>Tahun Terbit</th>
+                                <th>ISBN</th>
+                                <th>Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                foreach ($books as $index => $book) {
+                            ?>
+    
+                            <tr>
+                                <td><?= $index + 1 ?></td>
+                                <td><?= $book['judul_buku'] ?></td>
+                                <td><?= $book['pengarang'] ?></td>
+                                <td><?= $book['penerbit'] ?></td>
+                                <td><?= $book['tahun_terbit'] ?></td>
+                                <td><?= $book['isbn'] ?></td>
+                                <td><?= $book['stok'] ?></td>
+                            </tr>
+                                    
+                            <?php } ?>
+                        </tbody>
+                    </table>
                 </div>
-
-                <table class="table mt-3" id="table-datatable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Judul Buku</th>
-                            <th>Pengarang</th>
-                            <th>Penerbit</th>
-                            <th>Tahun Terbit</th>
-                            <th>ISBN</th>
-                            <th>Stok</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                            foreach ($books as $index => $book) {
-                        ?>
-
-                        <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><?= $book['judul_buku'] ?></td>
-                            <td><?= $book['pengarang'] ?></td>
-                            <td><?= $book['penerbit'] ?></td>
-                            <td><?= $book['tahun_terbit'] ?></td>
-                            <td><?= $book['isbn'] ?></td>
-                            <td><?= $book['stok'] ?></td>
-                        </tr>
-                                
-                        <?php } ?>
-                    </tbody>
-                </table>
             </div>
             
         </div>

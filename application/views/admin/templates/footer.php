@@ -2,7 +2,7 @@
 <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Pustaka Booking - Muhamad Ferdinal 12220586 <?= date('Y') ?></span>
+                        <span>Copyright &copy; <?= date('Y') ?>. Pustaka Booking - Muhamad Ferdinal 12220586 </span>
                     </div>
                 </div>
             </footer>
@@ -41,6 +41,8 @@
 
     <!-- Bootstrap core JavaScript-->
     <script src="<?= base_url('assets/') ?>vendor/jquery/jquery.min.js"></script>
+    <script src="<?= base_url('assets/') ?>vendor/datatables/jquery.dataTables.js"></script>
+    <script src="<?= base_url('assets/') ?>vendor/datatables/dataTables.bootstrap4.js"></script>
     <script src="<?= base_url('assets/') ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
@@ -50,16 +52,19 @@
     <script src="<?= base_url('assets/') ?>js/sb-admin-2.min.js"></script>
 
     <script>
-        $(".custom-file-input").on('change', function () {
-            let fileName = $(this).val().split('\\').pop();
-            $(this).next('.custom-file-label').addClass('selected').html(fileName);
-        });
 
         $(document).ready(function () {
-            $('#table-datatable').dataTable();
+
+            $(".custom-file-input").on('change', function () {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass('selected').html(fileName);
+            });
+
+            $('.default-dataTable').dataTable();
+
+            $(".alert-message").alert().delay(3500).slideUp('slow');
         });
 
-        $(".alert-message").alert().delay(3500).slideUp('slow');
     </script>
 
 </body>
