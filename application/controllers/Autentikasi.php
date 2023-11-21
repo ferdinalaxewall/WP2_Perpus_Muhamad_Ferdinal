@@ -89,6 +89,42 @@ class Autentikasi extends CI_Controller
         }
     }
 
+    public function registrasi()
+    {
+        if ($this->session->userdata('email')) {
+            redirect('user');
+        }
+
+        $this->form_validation->set_rules('nama', 'Nama Lengkap',
+            'required', [
+                'required' => '%s Belum Diisi!'
+            ]);
+        
+        $this->form_validation->set_rules('email', 'Alamat Email',
+            'required|trim|valid_email|is_unique[user.email]', [
+                'valid_email' => '%s Tidak Benar!!',
+                'required' => '%s Belum diisi!!',
+                'is_unique' => '%s Sudah Terdaftar!'
+            ]);
+
+        $this->form_validation->set_rules('password1', 'Password',
+            'required|trim|min_length[3]|matches[password2]', [
+                'matches' => 'Password Tidak Sama!!',
+                'min_length' => 'Password Terlalu Pendek'
+            ]);
+
+        $this->form_validation->set_rules('password2', 'Konfirmasi Password', 'required|trim|matches[password1]');
+
+        if (! $this->form_validation->run()) {
+            $data['judul'] = 'Registrasi Member';
+            $this->load->view('templates/auth_header', $data);
+            $this->load->view('autentikasi/registrasi');
+            $this->load->view('templates/auth_footer');
+        } else {
+            echo "ok";
+        }
+    }
+
     public function blok()
     {
         $this->load->view('autentikasi/blok');
