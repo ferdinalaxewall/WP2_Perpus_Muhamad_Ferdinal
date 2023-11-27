@@ -59,8 +59,8 @@ class User extends CI_Controller
             $this->load->view('user/ubah-profile', $data);
             $this->load->view('admin/templates/footer');
         } else {
-            $nama = $this->input->post('nama', true);
-            $email = $this->input->post('email', true);
+            $dto['nama'] = $this->input->post('nama', true);
+            $dto['email'] = $this->input->post('email', true);
             $upload_image = $_FILES['image']['name'];
 
             
@@ -80,8 +80,7 @@ class User extends CI_Controller
                         unlink(FCPATH . 'assets/img/profile/' . $gambar_lama);
                     }
 
-                    $gambar_baru = $this->upload->data('file_name');
-                    $this->db->set('image', $gambar_baru);
+                    $dto['image'] = $this->upload->data('file_name');
                 } else {
                     $this->session->set_flashdata(
                         'pesan',
@@ -92,10 +91,17 @@ class User extends CI_Controller
                 }
             }
 
-            $this->db->set('nama', $nama);
-            $this->db->set('email', $email);
-            $this->db->update('user');
+            // Update User Data
+            $this->db->where([
+                'email' => $this->session->userdata('email')
+            ]);
+            $this->db->update('user', $dto);
 
+            // Update Session
+            $this->session->set_userdata('email', $dto['email']);
+            $this->session->set_userdata('name', $dto['name']);
+
+            // Return The Notification Message
             $this->session->set_flashdata(
                 'pesan',
                 '<div class="alert alert-success alert-message" role="alert">Profil
