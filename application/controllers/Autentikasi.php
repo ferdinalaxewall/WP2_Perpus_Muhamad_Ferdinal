@@ -109,11 +109,14 @@ class Autentikasi extends CI_Controller
 
         $this->form_validation->set_rules('password1', 'Password',
             'required|trim|min_length[3]|matches[password2]', [
-                'matches' => 'Password Tidak Sama!!',
-                'min_length' => 'Password Terlalu Pendek'
+                'matches' => '%s Tidak Sama!!',
+                'min_length' => '%s Terlalu Pendek'
             ]);
-
-        $this->form_validation->set_rules('password2', 'Konfirmasi Password', 'required|trim|matches[password1]');
+            
+            $this->form_validation->set_rules('password2', 'Konfirmasi Password', 
+            'required|trim|matches[password1]', [
+                'matches' => '%s Tidak Sama!!',
+            ]);
 
         if (! $this->form_validation->run()) {
             $data['judul'] = 'Registrasi Member';

@@ -30,7 +30,7 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Pilih "Logout dibawah jika kamu yakin sudah selesai".</div>
+                <div class="modal-body">Pilih "Logout" dibawah jika kamu yakin sudah selesai.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="<?= base_url('autentikasi/logout') ?>">Logout</a>
