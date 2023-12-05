@@ -62,7 +62,6 @@ class User extends CI_Controller
             $dto['nama'] = $this->input->post('nama', true);
             $dto['email'] = $this->input->post('email', true);
             $upload_image = $_FILES['image']['name'];
-
             
             if ($upload_image) {
                 $config['upload_path'] = './assets/img/profile/';

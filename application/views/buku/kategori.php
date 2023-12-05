@@ -31,7 +31,6 @@
                             foreach ($categories as $index => $category) {
                         ?>
 
-
                         <tr>
                             <td><?= $index + 1 ?></td>
                             <td><?= $category['nama_kategori'] ?></td>
@@ -56,34 +55,34 @@
 
  <!-- Add Category Modal-->
  <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered  " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <form action="<?= base_url('buku/kategori') ?>" method="post">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="kategori" class="form-label">Jenis Kategori</label>
-                            <select name="kategori" id="kategori" class="form-control form-control-user" required>
-                                <option value="" selected disabled>Pilih Jenis Kategori</option>
-                                <?php foreach($category_types as $type) { ?>
-                                    <option value="<?= $type ?>"><?= ucfirst($type) ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-plus-circle"></i> Tambah
-                        </button>
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    </div>
-                </form>
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered  " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Kategori</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
+            <form action="<?= base_url('buku/kategori') ?>" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="kategori" class="form-label">Jenis Kategori</label>
+                        <select name="kategori" id="kategori" class="form-control form-control-user" required>
+                            <option value="" selected disabled>Pilih Jenis Kategori</option>
+                            <?php foreach($category_types as $type) { ?>
+                                <option value="<?= $type ?>"><?= ucfirst($type) ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-plus-circle"></i> Tambah
+                    </button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
