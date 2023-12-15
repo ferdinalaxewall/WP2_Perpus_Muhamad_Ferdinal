@@ -84,7 +84,7 @@
                     </div>
                     <div class="form-group">
                         <label for="image" class="form-label">Gambar Buku</label>
-                        <input type="file" name="image" id="image" placeholder="Masukkan Gambar Buku" class="form-control" required>
+                        <input type="file" name="image" id="image" placeholder="Masukkan Gambar Buku" accept="image/*" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="id_kategori" class="form-label">Kategori Buku</label>

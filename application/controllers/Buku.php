@@ -37,16 +37,6 @@ class Buku extends CI_Controller
                 'required' => '%s harus diisi!',
                 'numeric' => '%s hanya boleh berisikan angka!',
         ]);
-
-        // Upload File Configuration
-        $config['upload_path'] = './assets/img/profile/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = '3000';
-        $config['file_name'] = 'pro' . time();
-
-        $this->load->library('upload');
-        $this->upload->initialize($config);
-
         if (! $this->form_validation->run()) {
             $this->load->view('admin/templates/header', $data);
             $this->load->view('admin/templates/sidebar', $data);
@@ -54,32 +44,58 @@ class Buku extends CI_Controller
             $this->load->view('buku/index', $data);
             $this->load->view('admin/templates/footer');
         } else {
-            if ($this->upload->do_upload('image')) {
-                $image = $this->upload->data();
-                $gambar = $image['file_name'];
+            $upload_image = $_FILES['image']['name'];
+
+            if ($upload_image) {
+
+                // Upload File Configuration
+                $config['upload_path'] = './assets/img/buku/';
+                $config['allowed_types'] = 'gif|jpg|png';
+                $config['max_size'] = '3000';
+                $config['file_name'] = 'pro' . time();
+    
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                
+                if ($this->upload->do_upload('image')) {
+                    $gambar = $this->upload->data('file_name');
+    
+                    $data = [
+                        'judul_buku' => $this->input->post('judul_buku', true),
+                        'id_kategori' => $this->input->post('id_kategori', true),
+                        'pengarang' => $this->input->post('pengarang', true),
+                        'penerbit' => $this->input->post('penerbit', true),
+                        'tahun_terbit' => $this->input->post('tahun_terbit', true),
+                        'isbn' => $this->input->post('isbn', true),
+                        'stok' => $this->input->post('stok', true),
+                        'dipinjam' => 0,
+                        'dibooking' => 0,
+                        'image' => $gambar,
+                    ];
+        
+                    $this->ModelBuku->simpanBuku($data);
+                    $this->session->set_flashdata(
+                        'pesan',
+                        "<div class='alert alert-success alert-message' role='alert'>Buku Berhasil Ditambahkan</div>"
+                    );
+                    
+                    redirect(base_url('buku'));
+                } else {
+                    $this->session->set_flashdata(
+                        'pesan',
+                        "<div class='alert alert-danger alert-message' role='alert'>{$this->upload->display_errors()}</div>"
+                    );
+
+                    redirect(base_url('buku'));
+                }
             } else {
-                $gambar = '';
+                $this->session->set_flashdata(
+                    'pesan',
+                    "<div class='alert alert-danger alert-message' role='alert'>Gambar Buku Tidak Berhasil di Upload</div>"
+                );
+                
+                redirect(base_url('buku'));
             }
-
-            $data = [
-                'judul_buku' => $this->input->post('judul_buku', true),
-                'id_kategori' => $this->input->post('id_kategori', true),
-                'pengarang' => $this->input->post('pengarang', true),
-                'penerbit' => $this->input->post('penerbit', true),
-                'tahun_terbit' => $this->input->post('tahun_terbit', true),
-                'isbn' => $this->input->post('isbn', true),
-                'stok' => $this->input->post('stok', true),
-                'dipinjam' => 0,
-                'dibooking' => 0,
-                'image' => $gambar,
-            ];
-
-            $this->ModelBuku->simpanBuku($data);
-            $this->session->set_flashdata(
-                'pesan',
-                "<div class='alert alert-success alert-message' role='alert'>Buku Berhasil Ditambahkan</div>"
-            );
-            redirect(base_url('buku'));
         }
     }
 
@@ -90,17 +106,17 @@ class Buku extends CI_Controller
         ])->row_array();
         $data['book'] = $this->ModelBuku->bukuWhere([
             'id' => $this->uri->segment(3)
-        ])->result_array();
+        ])->row_array();
         $kategori = $this->ModelBuku->joinKategoriBuku([
             'buku.id' => $this->uri->segment(3)
         ])->result_array();
         
         foreach ($kategori as $k) {
             $data['id'] = $k['id_kategori'];
-            $data['k'] = $k['kategori'];
+            $data['k'] = $k['nama_kategori'];
         }
 
-        $data['kategori'] = $this->ModelBuku->getKategori()->result_array();
+        $data['categories'] = $this->ModelBuku->getKategori()->result_array();
 
         $this->form_validation->set_rules(self::defineDefaultRules('judul_buku', 'Judul Buku'));
         $this->form_validation->set_rules(self::defineDefaultRules('pengarang', 'Nama Pengarang'));
@@ -124,7 +140,7 @@ class Buku extends CI_Controller
         ]);
 
         // Upload File Configuration
-        $config['upload_path'] = './assets/img/profile/';
+        $config['upload_path'] = './assets/img/buku/';
         $config['allowed_types'] = 'gif|jpg|png';
         $config['max_size'] = '3000';
         $config['file_name'] = 'pro' . time();
@@ -136,7 +152,7 @@ class Buku extends CI_Controller
             $this->load->view('admin/templates/header', $data);
             $this->load->view('admin/templates/sidebar', $data);
             $this->load->view('admin/templates/topbar', $data);
-            $this->load->view('buku/ubah_buku', $data);
+            $this->load->view('buku/ubah-buku', $data);
             $this->load->view('admin/templates/footer');
         } else {
             if ($this->upload->do_upload('image')) {
