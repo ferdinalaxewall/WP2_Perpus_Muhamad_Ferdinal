@@ -50,7 +50,7 @@ class Buku extends CI_Controller
 
                 // Upload File Configuration
                 $config['upload_path'] = './assets/img/buku/';
-                $config['allowed_types'] = 'gif|jpg|png';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
                 $config['max_size'] = '3000';
                 $config['file_name'] = 'pro' . time();
     
@@ -139,15 +139,6 @@ class Buku extends CI_Controller
                 'numeric' => '%s hanya boleh berisikan angka!',
         ]);
 
-        // Upload File Configuration
-        $config['upload_path'] = './assets/img/buku/';
-        $config['allowed_types'] = 'gif|jpg|png';
-        $config['max_size'] = '3000';
-        $config['file_name'] = 'pro' . time();
-
-        $this->load->library('upload');
-        $this->upload->initialize($config);
-
         if(! $this->form_validation->run()) {
             $this->load->view('admin/templates/header', $data);
             $this->load->view('admin/templates/sidebar', $data);
@@ -155,14 +146,27 @@ class Buku extends CI_Controller
             $this->load->view('buku/ubah-buku', $data);
             $this->load->view('admin/templates/footer');
         } else {
-            if ($this->upload->do_upload('image')) {
-                $image = $this->upload->data();
-                unlink('assets/img/upload/' . $this->input->post('old_pict', TRUE));
+            // Upload File Configuration
+            $config['upload_path'] = './assets/img/buku/';
+            $config['allowed_types'] = 'gif|jpg|png|jpeg';
+            $config['max_size'] = '3000';
+            $config['file_name'] = 'pro' . time();
+            
+            $upload_image = $_FILES['image']['name'];
+    
+            $this->load->library('upload');
+            $this->upload->initialize($config);
 
-                $gambar = $image['file_name'];
+            if ($upload_image && $this->upload->do_upload('image')) {
+                if (!empty($data['book']['image']) && $data['book']['image'] != 'img.jpg') {
+                    unlink(FCPATH . 'assets/img/buku/' . $data['book']['image']);
+                }
+
+                $gambar = $this->upload->data('file_name');
             } else {
-                $gambar = $this->input->post('old_pict', TRUE);
+                $gambar = $data['book']['image'];
             }
+
 
             $data = [
                 'judul_buku' => $this->input->post('judul_buku', true),
@@ -177,11 +181,11 @@ class Buku extends CI_Controller
                 'image' => $gambar,
             ];
 
-            $this->ModelBuku->updateBuku([
+            $this->ModelBuku->updateBuku(
                 $data, [
-                    'id' => $this->input->post('id')
+                    'id' => $this->uri->segment(3)
                 ]
-            ]);
+            );
             
             $this->session->set_flashdata(
                 'pesan',

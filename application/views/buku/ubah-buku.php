@@ -5,7 +5,7 @@
     <div class="row mt-3">
         <div class="card col-12">
             <div class="card-body">
-                <?= form_open_multipart('user/ubahprofil') ?>
+                <?= form_open_multipart(base_url('buku/ubahbuku/' .  $book['id'])) ?>
                     
                     <div class="form-group">
                         <label for="judul_buku" class="form-label">Judul Buku</label>
